@@ -21,6 +21,6 @@ def readFile(String filename) {
     return readFile(file: filename)
 }
 
-def parseJson(String json) {
+def readJSON(String json) {
     return readJSON(text: json)
 }
