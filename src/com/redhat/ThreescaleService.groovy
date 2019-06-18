@@ -85,11 +85,11 @@ class ThreescaleService {
     def globalOptions = toolbox.getGlobalToolboxOptions()
     def commandLine = [ "3scale", "proxy-config", "show" ] + globalOptions + [ this.toolbox.destination, this.environment.targetSystemName, environment ]
 
-    String proxyDefinition = toolbox.runToolbox(commandLine: commandLine,
-                                                jobName: "show-proxy")
+    def proxyDefinition = toolbox.runToolbox(commandLine: commandLine,
+                                             jobName: "show-proxy")
 
     Util util = new Util()
-    return util.parseJson().content.proxy as Map
+    return util.parseJson(proxyDefinition).content.proxy as Map
   }
 
   void promoteToProduction() {
