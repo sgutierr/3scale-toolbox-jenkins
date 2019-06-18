@@ -11,22 +11,21 @@ class ThreescaleService {
   void importOpenAPI() {
     Util util = new Util()
 
-    if (this.environment.stagingPublicBaseURL != null || this.environment.productionPublicBaseURL != null) {
-      // See https://issues.jboss.org/browse/THREESCALE-2607
-      throw new Exception("NOT_IMPLEMENTED")
-    }
-
-    if (this.environment.privateBaseUrl != null) {
-      // See https://issues.jboss.org/browse/THREESCALE-2734
-      throw new Exception("NOT_IMPLEMENTED")
-    }
-
     // Compute the target system_name
     this.environment.targetSystemName = (this.environment.environmentName != null ? "${this.environment.environmentName}_" : "") + this.environment.baseSystemName + "_${this.openapi.majorVersion}"
 
     def baseName = basename(this.openapi.filename)
     def globalOptions = toolbox.getGlobalToolboxOptions()
     def commandLine = "3scale import openapi ${globalOptions} -t ${this.environment.targetSystemName} -d ${this.toolbox.destination} /artifacts/${baseName}"
+    if (this.environment.stagingPublicBaseURL != null) {
+      commandLine += " --staging-public-base-url='${stagingPublicBaseURL}'"
+    }
+    if (this.environment.productionPublicBaseURL != null) {
+      commandLine += " --production-public-base-url='${productionPublicBaseURL}'"
+    }
+    if (this.environment.privateBaseUrl != null) {
+      commandLine += " --override-private-base-url='${privateBaseUrl}'"
+    }
     toolbox.runToolbox(commandLine: commandLine,
                        jobName: "import",
                        openAPI: [
@@ -49,18 +48,46 @@ class ThreescaleService {
   }
 
   void applyApplication(Map application) {
-    // See https://issues.jboss.org/browse/THREESCALE-2425
-    throw new Exception("NOT_IMPLEMENTED")
+    assert application.name != null
+    assert application.applicationPlan != null
+    assert application.accountId != null
+
+    def globalOptions = toolbox.getGlobalToolboxOptions()
+    def commandLine = "3scale application apply ${globalOptions} ${this.toolbox.destination}"
+
+    if (this.openapi.securityScheme == ThreescaleSecurityScheme.APIKEY 
+     || this.openapi.securityScheme == ThreescaleSecurityScheme.OPEN) {
+       
+      commandLine += " '${application.userKey}'"
+    } else if (this.openapi.securityScheme == ThreescaleSecurityScheme.OIDC) {
+      commandLine += " '${application.clientId}' --application-key='${application.clientSecret}'"
+    } else {
+      throw new Exception("NOT_IMPLEMENTED")
+    }
+
+    commandLine += " --name='${application.name}' --description='${application.description != null ? application.description : "Created by the 3scale_toolbox from a Jenkins pipeline."}'"
+    commandLine += " --plan='${application.applicationPlan}' --service=${this.environment.targetSystemName} --account=${application.accountId}"
+    toolbox.runToolbox(commandLine: commandLine,
+                       jobName: "apply-application")
   }
 
-  Map readProxy() {
-    // See https://issues.jboss.org/browse/THREESCALE-2405
-    throw new Exception("NOT_IMPLEMENTED")
+  Map readProxy(String environment) {
+    def globalOptions = toolbox.getGlobalToolboxOptions()
+    def commandLine = "3scale proxy-config show ${globalOptions} ${this.toolbox.destination} ${this.environment.targetSystemName} ${environment}"
+
+    String proxyDefinition = toolbox.runToolbox(commandLine: commandLine,
+                                                jobName: "show-proxy")
+
+    Util util = new Util()
+    return util.parseJson().content.proxy as Map
   }
 
   void promoteToProduction() {
-    // See https://issues.jboss.org/browse/THREESCALE-2405
-    throw new Exception("NOT_IMPLEMENTED")
+    def globalOptions = toolbox.getGlobalToolboxOptions()
+    def commandLine = "3scale proxy-config promote ${globalOptions} ${this.toolbox.destination} ${this.environment.targetSystemName}"
+    toolbox.runToolbox(commandLine: commandLine,
+                       jobName: "promote-to-production")
+
   }
 
   static String basename(path) {
