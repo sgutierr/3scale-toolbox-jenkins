@@ -45,7 +45,7 @@ def runToolbox(ToolboxConfiguration conf, Map call) {
                   "name": "job",
                   "image": conf.image,
                   "imagePullPolicy": conf.imagePullPolicy,
-                  "command": [ "scl", "enable", "rh-ruby25", "/opt/rh/rh-ruby25/root/usr/local/bin/${call.commandLine}" ],
+                  "command": call.commandLine,
                   "volumeMounts": [
                     [
                       "mountPath": "/opt/app-root/src/",
