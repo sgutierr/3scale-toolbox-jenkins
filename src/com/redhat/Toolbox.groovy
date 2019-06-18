@@ -46,9 +46,15 @@ def runToolbox(ToolboxConfiguration conf, Map call) {
                   "image": conf.image,
                   "imagePullPolicy": conf.imagePullPolicy,
                   "command": call.commandLine,
+                  "env": [
+                    [
+                      "name": "HOME",
+                      "value": "/config"
+                    ]
+                  ]
                   "volumeMounts": [
                     [
-                      "mountPath": "/opt/app-root/src/",
+                      "mountPath": "/config",
                       "name": "toolbox-config"
                     ],
                     [
