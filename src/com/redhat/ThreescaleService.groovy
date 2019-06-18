@@ -60,7 +60,7 @@ class ThreescaleService {
        
       commandLine += application.userKey
     } else if (this.openapi.securityScheme == ThreescaleSecurityScheme.OIDC) {
-      commandLine += [ application.clientId}, "--application-key=${application.clientSecret}" ]
+      commandLine += [ application.clientId, "--application-key=${application.clientSecret}" ]
     } else {
       throw new Exception("NOT_IMPLEMENTED")
     }
