@@ -37,7 +37,14 @@ class ThreescaleService {
   void applyApplicationPlans() {
     def globalOptions = toolbox.getGlobalToolboxOptions()
     this.applicationPlans.each{
-      def commandLine = [ "3scale", "application-plan", "apply" ] + globalOptions + [ this.toolbox.destination, this.environment.targetSystemName, it.systemName, "--approval-required=${it.approvalRequired}", "--cost-per-month=${it.costPerMonth}", "--end-user-required=${it.endUserRequired}", "--name=${it.name}", "--publish=${it.published}", "--setup-fee=${it.setupFee}", "--trial-period-days=${it.trialPeriodDays}" ]
+      def commandLine = [ "3scale", "application-plan", "apply" ] + globalOptions + [ this.toolbox.destination, this.environment.targetSystemName, it.systemName ]
+      commandLine += [ "--approval-required=${it.approvalRequired}", 
+                       "--cost-per-month=${it.costPerMonth}", 
+                       "--name=${it.name}", 
+                       "--publish=${it.published}", 
+                       "--setup-fee=${it.setupFee}", 
+                       "--trial-period-days=${it.trialPeriodDays}" ]
+
       if (it.defaultPlan) {
         commandLine += "--default"
       }
