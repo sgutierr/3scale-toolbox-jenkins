@@ -18,13 +18,13 @@ class ThreescaleService {
     def globalOptions = toolbox.getGlobalToolboxOptions()
     def commandLine = [ "3scale", "import", "openapi" ] + globalOptions + [ "-t", this.environment.targetSystemName, "-d", this.toolbox.destination, "/artifacts/${baseName}" ]
     if (this.environment.stagingPublicBaseURL != null) {
-      commandLine += "--staging-public-base-url=${stagingPublicBaseURL}"
+      commandLine += "--staging-public-base-url=${this.environment.stagingPublicBaseURL}"
     }
     if (this.environment.productionPublicBaseURL != null) {
-      commandLine += "--production-public-base-url=${productionPublicBaseURL}"
+      commandLine += "--production-public-base-url=${this.environment.productionPublicBaseURL}"
     }
     if (this.environment.privateBaseUrl != null) {
-      commandLine += "--override-private-base-url=${privateBaseUrl}"
+      commandLine += "--override-private-base-url=${this.environment.privateBaseUrl}"
     }
     toolbox.runToolbox(commandLine: commandLine,
                        jobName: "import",
