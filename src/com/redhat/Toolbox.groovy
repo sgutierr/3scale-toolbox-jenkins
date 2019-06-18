@@ -51,7 +51,7 @@ def runToolbox(ToolboxConfiguration conf, Map call) {
                       "name": "HOME",
                       "value": "/config"
                     ]
-                  ]
+                  ],
                   "volumeMounts": [
                     [
                       "mountPath": "/config",
