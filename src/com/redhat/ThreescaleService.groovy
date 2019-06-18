@@ -88,8 +88,7 @@ class ThreescaleService {
     def proxyDefinition = toolbox.runToolbox(commandLine: commandLine,
                                              jobName: "show-proxy")
 
-    Util util = new Util()
-    return util.parseJson(proxyDefinition).content.proxy as Map
+    return new Util().parseJson(proxyDefinition).content.proxy as Map
   }
 
   void promoteToProduction() {
