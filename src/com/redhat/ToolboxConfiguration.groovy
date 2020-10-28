@@ -6,8 +6,8 @@ class ToolboxConfiguration {
   String openshiftProject
   String destination
   String secretName
-  String image = "quay.io/redhat/3scale-toolbox:v0.10.0"
-  String backoffLimit = 2 // three attempts (one first try + two retries)
+  String image = "quay.io/redhat/3scale-toolbox:v0.14.0"
+  int backoffLimit = 2 // three attempts (one first try + two retries)
   String imagePullPolicy = "IfNotPresent"
   int activeDeadlineSeconds = 90
   String JOB_BASE_NAME
@@ -22,18 +22,18 @@ class ToolboxConfiguration {
 
   String getToolboxVersion() {
     def result = toolbox.runToolbox(this,
-                                    [ commandLine: "3scale -v",
+                                    [ commandLine: [ "3scale", "-v" ],
                                       jobName: "version" ])
     return result.stdout
   }
 
-  String getGlobalToolboxOptions() {
-      def options = ""
+  List<String> getGlobalToolboxOptions() {
+      List<String> options = []
       if (this.insecure) {
-          options += "-k "
+          options += "-k"
       }
       if (this.verbose) {
-          options += "--verbose "
+          options += "--verbose"
       }
       return options
   }
