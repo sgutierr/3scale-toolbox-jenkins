@@ -23,15 +23,19 @@ def runToolbox(ToolboxConfiguration conf, Map call) {
         createConfigMap(openshift, oasConfigMapName, [ (call.openAPI.filename): call.openAPI.content ])
       }
 
-      def jobName = "${JOB_BASE_NAME}-${BUILD_NUMBER}-${call.jobName}"
+      // Job name and labels are limited to 63 characters and cannot end with a dash (-)
+      def jobName = "${JOB_BASE_NAME}-${BUILD_NUMBER}-${call.jobName}".take(63)
+      while (jobName[-1] == "-") {
+        jobName = jobName[0..-2] // Strip last character if it's a dash
+      }
       def jobSpecs = [
         "apiVersion": "batch/v1",
         "kind": "Job",
         "metadata": [
           "name": jobName,
           "labels": [
-            "build": "${JOB_BASE_NAME}-${BUILD_NUMBER}",
-            "job": "${JOB_BASE_NAME}"
+            "build": "${JOB_BASE_NAME}-${BUILD_NUMBER}".take(63),
+            "job": "${JOB_BASE_NAME}".take(63)
           ]
         ],
         "spec": [
@@ -45,10 +49,16 @@ def runToolbox(ToolboxConfiguration conf, Map call) {
                   "name": "job",
                   "image": conf.image,
                   "imagePullPolicy": conf.imagePullPolicy,
-                  "command": [ "scl", "enable", "rh-ruby25", "/opt/rh/rh-ruby25/root/usr/local/bin/${call.commandLine}" ],
+                  "args": call.commandLine,
+                  "env": [
+                    [
+                      "name": "HOME",
+                      "value": "/config"
+                    ]
+                  ],
                   "volumeMounts": [
                     [
-                      "mountPath": "/opt/app-root/src/",
+                      "mountPath": "/config",
                       "name": "toolbox-config"
                     ],
                     [
