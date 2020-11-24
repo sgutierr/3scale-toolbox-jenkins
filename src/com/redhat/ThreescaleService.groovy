@@ -91,7 +91,7 @@ class ThreescaleService {
            commandLine = ["3scale", "service", "apply"] + globalOptions + [this.toolbox.destination, this.environment.targetSystemName]
            commandLine += ["--description=${this.openapi.descriptionWithTags}"]
            toolbox.runToolbox(commandLine: commandLine,
-                    jobName: "add-description-tags}")
+                    jobName: "add-description-tags")
         }   
     }
     void applyApplication() {
