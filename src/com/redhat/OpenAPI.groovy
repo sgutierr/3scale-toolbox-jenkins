@@ -40,7 +40,7 @@ abstract class OpenAPI {
     
     void getServiceTags() {    
         if (content.tags != null && content.tags.size() >= 1) {
-            tags = content.tags[0].name
+            tags = content.tags[0].name as String           
            } 
     }
            
