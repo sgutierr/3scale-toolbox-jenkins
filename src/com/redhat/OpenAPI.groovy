@@ -40,7 +40,7 @@ abstract class OpenAPI {
     
     void getServiceTags() {    
         if (content.tags != null && content.tags.size() >= 1) {                      
-            descriptionWithTags = it.this.content.info.description != null ? "${this.content.info.description} TAGS: " :"TAGS: " 
+            descriptionWithTags = this.content.info.description != null ? "${this.content.info.description} TAGS: " :"TAGS: " 
             content.tags.each {
                 descriptionWithTags += "${it.name} "           
             }  
