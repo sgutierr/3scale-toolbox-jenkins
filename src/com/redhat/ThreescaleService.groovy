@@ -81,6 +81,8 @@ class ThreescaleService {
                     jobName: "apply-application-plan-${it.systemName}")
         }
     }    
+
+    // Append tags after description content
     void applyDescriptioWithTags() {
         def globalOptions = toolbox.getGlobalToolboxOptions()
         def commandLine
@@ -89,10 +91,8 @@ class ThreescaleService {
            commandLine = ["3scale", "service", "apply"] + globalOptions + [this.toolbox.destination, this.environment.targetSystemName]
            commandLine += ["--description=${this.openapi.descriptionWithTags}"]
            toolbox.runToolbox(commandLine: commandLine,
-                    jobName: "description-tag-${this.environment.targetSystemName}")
-        } else {
-            throw new Exception("NOT_IMPLEMENTED")
-        }     
+                    jobName: "add-description-tags}")
+        }   
     }
     void applyApplication() {
 
