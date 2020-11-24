@@ -44,7 +44,7 @@ abstract class OpenAPI {
             descriptionWithTags = "TAGS: " 
             content.tags.each {
             tag = it.name as String  
-            descriptionWithTags += it.name as String + " "           
+                descriptionWithTags += "${it.name} "           
             }  
           descriptionWithTags += this.content.info.description as String   
         }     
