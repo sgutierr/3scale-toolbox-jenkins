@@ -54,7 +54,8 @@ class ThreescaleService {
                 ])
     }
 
-    void applyApplicationPlans() {
+
+  void applyApplicationPlans() {
         def globalOptions = toolbox.getGlobalToolboxOptions()
 
         this.applicationPlans.each {
@@ -79,6 +80,24 @@ class ThreescaleService {
             toolbox.runToolbox(commandLine: commandLine,
                     jobName: "apply-application-plan-${it.systemName}")
         }
+    }    
+    
+    void applyDescriptioWithTags() {
+        def globalOptions = toolbox.getGlobalToolboxOptions()
+        def commandLine
+
+        if (this.openapi.descriptionWithTags != null) {
+            
+            if (it.artefactFile?.trim()) {
+                commandLine = ["3scale", "service", "apply", "-f"] + it.artefactFile + globalOptions + [this.toolbox.destination, this.environment.targetSystemName]
+            } else {
+                commandLine = ["3scale", "service", "apply"] + globalOptions + [this.toolbox.destination, this.environment.targetSystemName]
+                commandLine += ["--description=${this.openapi.descriptionWithTags}"]
+
+            }
+            toolbox.runToolbox(commandLine: commandLine,
+                    jobName: "apply-description-with-tags-${it.systemName}")
+        }     
     }
 
     void applyApplication() {
