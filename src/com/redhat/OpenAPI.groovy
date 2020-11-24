@@ -10,7 +10,6 @@ abstract class OpenAPI {
     ThreescaleSecurityScheme securityScheme
     boolean validateOAS = true
     String descriptionWithTags
-    String tag
 
     OpenAPI(Map conf) {
         assert conf.filename != null
@@ -40,13 +39,12 @@ abstract class OpenAPI {
     }
     
     void getServiceTags() {    
-        if (content.tags != null && content.tags.size() >= 1) {            
-            descriptionWithTags = "TAGS: " 
+        if (content.tags != null && content.tags.size() >= 1) {                      
+            descriptionWithTags = it.this.content.info.description != null ? "${this.content.info.description} TAGS: " :"TAGS: " 
             content.tags.each {
-            tag = it.name as String  
                 descriptionWithTags += "${it.name} "           
             }  
-          descriptionWithTags += this.content.info.description as String   
+          
         }     
     }
           
