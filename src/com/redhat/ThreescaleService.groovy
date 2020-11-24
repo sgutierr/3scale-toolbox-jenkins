@@ -81,11 +81,10 @@ class ThreescaleService {
                     jobName: "apply-application-plan-${it.systemName}")
         }
     }    
- /*    
     void applyDescriptioWithTags() {
         def globalOptions = toolbox.getGlobalToolboxOptions()
         def commandLine
-
+        this.openapi.getServiceTags() 
         if (this.openapi.descriptionWithTags != null) {
             
             if (it.artefactFile?.trim()) {
@@ -99,7 +98,6 @@ class ThreescaleService {
                     jobName: "apply-description-with-tags-${it.systemName}")
         }     
     }
-*/
     void applyApplication() {
 
         def globalOptions = toolbox.getGlobalToolboxOptions()
