@@ -10,6 +10,7 @@ abstract class OpenAPI {
     ThreescaleSecurityScheme securityScheme
     boolean validateOAS = true
     String descriptionWithTags
+    String tag
 
     OpenAPI(Map conf) {
         assert conf.filename != null
@@ -39,9 +40,10 @@ abstract class OpenAPI {
     }
     
     void getServiceTags() {    
-        if (content.tags != null && content.tags.size() >= 1) {
-            descriptionWithTags = this.content.info.description as String  
-            descriptionWithTags += content.tags[0].name as String           
+        if (content.tags != null && content.tags.size() >= 1) {            
+            tag = content.tags[0].name as String  
+            descriptionWithTags = content.tags[0].name as String           
+            descriptionWithTags += this.content.info.description as String  
         } else {
            throw new Exception("No tags found")   
         }     
