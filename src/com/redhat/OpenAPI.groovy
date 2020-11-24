@@ -9,7 +9,7 @@ abstract class OpenAPI {
     String majorVersion
     ThreescaleSecurityScheme securityScheme
     boolean validateOAS = true
-    String tags
+    String descriptionWithTags
 
     OpenAPI(Map conf) {
         assert conf.filename != null
@@ -40,7 +40,8 @@ abstract class OpenAPI {
     
     void getServiceTags() {    
         if (content.tags != null && content.tags.size() >= 1) {
-            tags = content.tags[0].name as String           
+            descriptionWithTags = this.content.info.description as String  
+            descriptionWithTags += content.tags[0].name as String           
            } 
     }
            
