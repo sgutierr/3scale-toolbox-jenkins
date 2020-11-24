@@ -81,7 +81,7 @@ class ThreescaleService {
                     jobName: "apply-application-plan-${it.systemName}")
         }
     }    
-    
+ /*    
     void applyDescriptioWithTags() {
         def globalOptions = toolbox.getGlobalToolboxOptions()
         def commandLine
@@ -99,7 +99,7 @@ class ThreescaleService {
                     jobName: "apply-description-with-tags-${it.systemName}")
         }     
     }
-
+*/
     void applyApplication() {
 
         def globalOptions = toolbox.getGlobalToolboxOptions()
