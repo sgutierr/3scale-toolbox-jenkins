@@ -89,7 +89,7 @@ class ThreescaleService {
            commandLine = ["3scale", "service", "apply"] + globalOptions + [this.toolbox.destination, this.environment.targetSystemName]
            commandLine += ["--description=${this.openapi.descriptionWithTags}"]
            toolbox.runToolbox(commandLine: commandLine,
-                    jobName: "description-tag-${this.openapi.tag}")
+                    jobName: "description-tag-${this.environment.targetSystemName}")
         } else {
             throw new Exception("NOT_IMPLEMENTED")
         }     
