@@ -37,13 +37,13 @@ abstract class OpenAPI {
         }
         this.content.info.title = newTitle
     }
-/*    
+    
     void getServiceTags() {    
         if (content.tags != null && content.tags.size() >= 1) {
             descriptionWithTags = this.content.info.description as String  
             descriptionWithTags += content.tags[0].name as String           
            } 
     }
- */          
+          
     abstract void parseOpenAPISpecificationFile()
 }
