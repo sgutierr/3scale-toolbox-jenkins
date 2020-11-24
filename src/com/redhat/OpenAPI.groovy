@@ -41,11 +41,12 @@ abstract class OpenAPI {
     
     void getServiceTags() {    
         if (content.tags != null && content.tags.size() >= 1) {            
-            tag = content.tags[0].name as String  
-            descriptionWithTags = content.tags[0].name as String           
-            descriptionWithTags += this.content.info.description as String  
-        } else {
-           throw new Exception("No tags found")   
+            descriptionWithTags = "TAGS: " 
+            content.tags.each {
+            tag = it.name as String  
+            descriptionWithTags += it.name as String + " "           
+            }  
+          descriptionWithTags += this.content.info.description as String   
         }     
     }
           
