@@ -82,7 +82,7 @@ class ThreescaleService {
         }
     }    
 
-    // Append tags after description content
+    // Append tags after description content sgutierr@redhat.com
     void applyDescriptioWithTags() {
         def globalOptions = toolbox.getGlobalToolboxOptions()
         def commandLine
