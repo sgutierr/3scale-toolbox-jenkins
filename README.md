@@ -1,8 +1,8 @@
 # Jenkins Shared Library fork 
 
 This fork adds these features:
---Support for OAS 3 files
---Copy service tags into 3scale description field
+- Support for OAS 3 files
+- Copy service tags into 3scale description field
 
 
 ## Jenkins Shared Library to call the 3scale toolbox
