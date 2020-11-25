@@ -1,4 +1,11 @@
-# Jenkins Shared Library to call the 3scale toolbox
+# Jenkins Shared Library fork 
+
+This fork adds these features:
+--Support for OAS 3 files
+--Copy service tags into 3scale description field
+
+
+## Jenkins Shared Library to call the 3scale toolbox
 
 This [Jenkins Shared Library](https://jenkins.io/doc/book/pipeline/shared-libraries/) helps pipelines writers to call the 3scale toolbox.
 
