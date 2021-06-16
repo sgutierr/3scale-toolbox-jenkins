@@ -78,6 +78,22 @@ ThreescaleService prepareThreescaleService(Map conf) {
   return service
 }
 
+ThreescaleService prepareThreescaleProduct(Map conf) {
+  assert conf.product != null
+  assert conf.environment != null
+  assert conf.toolbox != null
+  assert conf.service != null
+  assert conf.applicationPlans != null
+  assert conf.applications != null
+
+  ThreescaleEnvironment environment = new ThreescaleEnvironment(conf.environment)
+  ToolboxConfiguration toolbox = new ToolboxConfiguration(conf.toolbox + ["JOB_BASE_NAME": JOB_BASE_NAME, "BUILD_NUMBER": BUILD_NUMBER])
+
+  ThreescaleService service = new ThreescaleService([ "openapi": openapi, "environment": environment, "toolbox": toolbox, applicationPlans: plans ,"applications":apps] + conf.service)
+
+  return service
+}
+
 Map getDefaultApplicationCredentials(ThreescaleEnvironment environment, ToolboxConfiguration toolbox, String applicationName) {
   String targetSystemName = environment.targetSystemName
   String destination = toolbox.destination
