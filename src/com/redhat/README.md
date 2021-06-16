@@ -1,4 +1,4 @@
-# Changes made respect the master brach 
+# Changes made respect the master branch 
 ## Add tags in 3scale using the 3scale description field
 
 Iterate for all tags in the OpenAPI specification and append them to the description field: openapi.groovy
