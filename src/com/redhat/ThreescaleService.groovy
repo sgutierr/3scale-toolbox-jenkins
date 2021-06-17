@@ -58,7 +58,7 @@ class ThreescaleService {
   void importProduct() {
         def globalOptions = toolbox.getGlobalToolboxOptions()
         def commandLine
-        commandLine = ["3scale", "product", "import", "-f"] + "https://raw.githubusercontent.com/sgutierr/APIProductCICDdemo/master/cicd/APIProduct.yaml" + globalOptions + this.environment.targetSystemName
+        commandLine = ["3scale", "product", "import", "-f"] + "https://raw.githubusercontent.com/sgutierr/APIProductCICDdemo/master/cicd/APIProduct.yaml" + globalOptions
         toolbox.runToolbox(commandLine: commandLine,
                     jobName: "import-3scale-product")
 
