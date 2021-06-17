@@ -90,7 +90,7 @@ ThreescaleService prepareThreescaleProduct(Map conf) {
   ThreescaleEnvironment environment = new ThreescaleEnvironment(conf.environment)
   ToolboxConfiguration toolbox = new ToolboxConfiguration(conf.toolbox + ["JOB_BASE_NAME": JOB_BASE_NAME, "BUILD_NUMBER": BUILD_NUMBER])
 
-  ThreescaleService service = new ThreescaleService([ "product": product, "environment": environment, "toolbox": toolbox, applicationPlans: plans ,"applications":apps] + conf.service)
+  ThreescaleService service = new ThreescaleService([ "product": product, "environment": environment, "toolbox": toolbox] + conf.service)
 
   return service
 }
