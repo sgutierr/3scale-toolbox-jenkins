@@ -4,11 +4,11 @@ package com.redhat
 
 class Product {
 
-    String productFile
+    String productfile
      
     Product (Map conf) {
         assert conf.productfile != null
-        this.productFile = conf.productfile
+        this.productfile = conf.productfile
     }
 
 }
