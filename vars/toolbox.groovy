@@ -87,6 +87,10 @@ ThreescaleService prepareThreescaleProduct(Map conf) {
   assert conf.applications != null
 
   Product product = new Product(conf.product)
+    if (conf.environment.targetSystemName == null) {
+    // Compute the target system_name
+    conf.environment.targetSystemName = (conf.environment.environmentName != null ? "${conf.environment.environmentName}_" : "") + conf.environment.baseSystemName + "_${openapi.majorVersion}"
+  }
   ThreescaleEnvironment environment = new ThreescaleEnvironment(conf.environment)
   ToolboxConfiguration toolbox = new ToolboxConfiguration(conf.toolbox + ["JOB_BASE_NAME": JOB_BASE_NAME, "BUILD_NUMBER": BUILD_NUMBER])
 
