@@ -60,7 +60,7 @@ class ThreescaleService {
         def commandLine
         commandLine = ["3scale", "product", "import", "-f"] + "/cicd/APIProduct.yaml" + globalOptions + [this.toolbox.destination, this.environment.targetSystemName]
         toolbox.runToolbox(commandLine: commandLine,
-                    jobName: "import-product-${it.systemName}")
+                    jobName: "import-3scale-product")
 
  }    
 
