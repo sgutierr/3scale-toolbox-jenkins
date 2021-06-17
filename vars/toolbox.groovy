@@ -86,10 +86,11 @@ ThreescaleService prepareThreescaleProduct(Map conf) {
   assert conf.applicationPlans != null
   assert conf.applications != null
 
+  Product product = new Product(conf.product)
   ThreescaleEnvironment environment = new ThreescaleEnvironment(conf.environment)
   ToolboxConfiguration toolbox = new ToolboxConfiguration(conf.toolbox + ["JOB_BASE_NAME": JOB_BASE_NAME, "BUILD_NUMBER": BUILD_NUMBER])
 
-  ThreescaleService service = new ThreescaleService([ "openapi": openapi, "environment": environment, "toolbox": toolbox, applicationPlans: plans ,"applications":apps] + conf.service)
+  ThreescaleService service = new ThreescaleService([ "product": product, "environment": environment, "toolbox": toolbox, applicationPlans: plans ,"applications":apps] + conf.service)
 
   return service
 }
