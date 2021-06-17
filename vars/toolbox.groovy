@@ -85,6 +85,8 @@ ThreescaleService prepareThreescaleProduct(Map conf) {
   assert conf.service != null
   assert conf.applicationPlans != null
   assert conf.applications != null
+  conf.product.productfile="https://raw.githubusercontent.com/sgutierr/APIProductCICDdemo/master/cicd/APIProduct.yaml"
+
 
   Product product = new Product(conf.product)
     if (conf.environment.targetSystemName == null) {
